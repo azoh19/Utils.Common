@@ -11,15 +11,6 @@ namespace Utils.Strings
     [PublicAPI]
     public sealed class PlaceholderSubstitution
     {
-        private Func<string, string> SubstititeKey { get; }
-        private StringComparison     Comparison    { get; }
-
-        private string Prefix  { get; }
-        private string Postfix { get; }
-
-        private int PrefixLength  => Prefix.Length;
-        private int PostfixLength => Postfix.Length;
-
         public PlaceholderSubstitution([NotNull] Func<string, string> substititeKey,
                                        [NotNull] string               prefix     = "{",
                                        [NotNull] string               postfix    = "}",
@@ -30,6 +21,15 @@ namespace Utils.Strings
             Postfix       = postfix       ?? throw new ArgumentNullException(nameof(postfix));
             Comparison    = comparison;
         }
+
+        private Func<string, string> SubstititeKey { get; }
+        private StringComparison     Comparison    { get; }
+
+        private string Prefix  { get; }
+        private string Postfix { get; }
+
+        private int PrefixLength  => Prefix.Length;
+        private int PostfixLength => Postfix.Length;
 
         [Pure]
         [CanBeNull]
