@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 #endregion
 
-namespace Utils.Handlers.Handlers
+namespace Utils.Handlers
 {
     [PublicAPI]
     public interface IAsyncHandler<in TInput, TOutput>

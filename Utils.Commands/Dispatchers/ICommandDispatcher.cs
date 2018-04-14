@@ -1,10 +1,10 @@
 ﻿#region Using
 
-using Utils.Commands.Commands;
+using JetBrains.Annotations;
 
 #endregion
 
-namespace Utils.Commands
+namespace Utils.Commands.Dispatchers
 {
     [PublicAPI]
     public interface ICommandDispatcher

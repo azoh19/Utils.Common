@@ -2,7 +2,9 @@
 
 #endregion
 
-namespace Utils.Commands.Commands
+using JetBrains.Annotations;
+
+namespace Utils.Commands
 {
     [PublicAPI]
     public interface ICommandResult

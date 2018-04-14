@@ -1,10 +1,11 @@
 ﻿#region Using
 
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 #endregion
 
-namespace Utils.Queries
+namespace Utils.Queries.Dispatchers
 {
     [PublicAPI]
     public interface IAsyncQueryDispatcher

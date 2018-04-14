@@ -2,7 +2,9 @@
 
 #endregion
 
-namespace Utils.Queries
+using JetBrains.Annotations;
+
+namespace Utils.Queries.Dispatchers
 {
     [PublicAPI]
     public interface IQueryDispatcher

@@ -1,11 +1,11 @@
 ﻿#region Using
 
 using JetBrains.Annotations;
-using Utils.Handlers.Commands;
+using Utils.Handlers;
 
 #endregion
 
-namespace Utils.Handlers.Handlers
+namespace Utils.Commands.Handlers
 {
     [PublicAPI]
     public interface IAsyncCommandHandler<in TCommand> : IAsyncHandler<TCommand, ICommandResult> where TCommand : ICommand
