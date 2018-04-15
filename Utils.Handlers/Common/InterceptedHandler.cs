@@ -6,16 +6,16 @@ using Utils.Handlers.Interceptors;
 
 #endregion
 
-namespace Utils.Handlers.Infrastructure
+namespace Utils.Handlers.Common
 {
-    internal sealed class InterceptedHandler<TInterceptor, THandler, TInput, TOutput> : IHandler<TInput, TOutput>
-        where TInterceptor : class, IInterceptor<THandler, TInput, TOutput>
-        where THandler : class, IHandler<TInput, TOutput>
+    [PublicAPI]
+    public sealed class InterceptedHandler<TInput, TOutput> : IHandler<TInput, TOutput>
     {
-        private readonly THandler     _innerHandler;
-        private readonly TInterceptor _innerInterceptor;
+        private readonly IHandler<TInput, TOutput>     _innerHandler;
+        private readonly IInterceptor<TInput, TOutput> _innerInterceptor;
 
-        public InterceptedHandler([NotNull] TInterceptor innerInterceptor, [NotNull] THandler innerHandler)
+        public InterceptedHandler([NotNull] IInterceptor<TInput, TOutput> innerInterceptor,
+                                  [NotNull] IHandler<TInput, TOutput>     innerHandler)
         {
             _innerInterceptor = innerInterceptor ?? throw new ArgumentNullException(nameof(innerInterceptor));
             _innerHandler     = innerHandler     ?? throw new ArgumentNullException(nameof(innerHandler));

@@ -8,10 +8,10 @@ using JetBrains.Annotations;
 namespace Utils.Handlers.Interceptors
 {
     [PublicAPI]
-    public interface IAsyncInterceptor<in THandler, in TInput, TOutput> where THandler : IAsyncHandler<TInput, TOutput>
+    public interface IAsyncInterceptor<TInput, TOutput>
     {
         [NotNull]
         [ItemCanBeNull]
-        Task<TOutput> InterceptAsync([NotNull] THandler handler, [NotNull] TInput input);
+        Task<TOutput> InterceptAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TInput input);
     }
 }

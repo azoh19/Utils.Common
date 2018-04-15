@@ -8,11 +8,10 @@ using JetBrains.Annotations;
 namespace Utils.Handlers.Converters
 {
     [PublicAPI]
-    public interface IInputAsyncConverter<in THandler, THandlerInput, in TInput, TOutput>
-        where THandler : IAsyncHandler<THandlerInput, TOutput>
+    public interface IInputAsyncConverter<out TInput, TOutput, in TNewInput>
     {
         [NotNull]
         [ItemCanBeNull]
-        Task<TOutput> ConvertAsync([NotNull] THandler handler, [NotNull] TInput output);
+        Task<TOutput> ConvertAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TNewInput output);
     }
 }

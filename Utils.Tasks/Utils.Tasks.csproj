@@ -8,8 +8,4 @@
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Utils.Tasks\Utils.Tasks.csproj" />
-  </ItemGroup>
-
 </Project>

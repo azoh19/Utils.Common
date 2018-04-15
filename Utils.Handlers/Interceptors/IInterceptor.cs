@@ -7,9 +7,9 @@ using JetBrains.Annotations;
 namespace Utils.Handlers.Interceptors
 {
     [PublicAPI]
-    public interface IInterceptor<in THandler, in TInput, out TOutput> where THandler : IHandler<TInput, TOutput>
+    public interface IInterceptor<TInput, TOutput>
     {
         [CanBeNull]
-        TOutput Intercept([NotNull] THandler handler, [NotNull] TInput input);
+        TOutput Intercept([NotNull] IHandler<TInput, TOutput> handler, [NotNull] TInput input);
     }
 }

@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Handlers", "Utils.Han
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils.Cqs", "Utils.Cqs", "{CAA79D02-A7D5-4C20-9E3D-9C90C8C534A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.DispatchConfiguration", "Utils.DispatchConfiguration\Utils.DispatchConfiguration.csproj", "{816F9D2F-B742-46CA-AC75-B92FAD407B59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.DispatchConfiguration", "Utils.DispatchConfiguration\Utils.DispatchConfiguration.csproj", "{816F9D2F-B742-46CA-AC75-B92FAD407B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Tasks", "Utils.Tasks\Utils.Tasks.csproj", "{28B27B05-077D-4415-8F22-243B3E98A176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{816F9D2F-B742-46CA-AC75-B92FAD407B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{816F9D2F-B742-46CA-AC75-B92FAD407B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{816F9D2F-B742-46CA-AC75-B92FAD407B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B27B05-077D-4415-8F22-243B3E98A176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B27B05-077D-4415-8F22-243B3E98A176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B27B05-077D-4415-8F22-243B3E98A176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B27B05-077D-4415-8F22-243B3E98A176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,11 @@
 
 #endregion
 
+#region Using
+
 using JetBrains.Annotations;
+
+#endregion
 
 namespace Utils.Queries
 {

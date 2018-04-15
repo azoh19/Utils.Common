@@ -7,10 +7,9 @@ using JetBrains.Annotations;
 namespace Utils.Handlers.Converters
 {
     [PublicAPI]
-    public interface IConverter<in THandler, THandlerInput, THandlerOutput, in TInput, out TOutput>
-        where THandler : IHandler<THandlerInput, THandlerOutput>
+    public interface IConverter<out TInput, in TOutput, in TNewInput, out TNewOutput>
     {
         [CanBeNull]
-        TOutput Convert([NotNull] THandler handler, [NotNull] TInput output);
+        TNewOutput Convert([NotNull] IHandler<TInput, TOutput> handler, [NotNull] TNewInput output);
     }
 }

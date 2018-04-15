@@ -1,8 +1,8 @@
 ﻿#region Using
 
-#endregion
-
 using JetBrains.Annotations;
+
+#endregion
 
 namespace Utils.Commands
 {
