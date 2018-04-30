@@ -1,12 +1,14 @@
 ﻿#region Using
 
+using JetBrains.Annotations;
 using Utils.Handlers.Converters;
 
 #endregion
 
 namespace Utils.Handlers.Common
 {
-    public sealed class TypeCastConverter<TInput, TOutput, TNewInput, TNewOutput> : IConverter<TInput, TOutput, TNewInput, TNewOutput>
+    [PublicAPI]
+    public sealed class TypeCastFullConverter<TInput, TOutput, TNewInput, TNewOutput> : IFullConverter<TInput, TOutput, TNewInput, TNewOutput>
         where TNewInput : TInput
         where TOutput : TNewOutput
     {

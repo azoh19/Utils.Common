@@ -28,7 +28,8 @@ namespace Utils.Handlers.Common
 
         #region IInterceptor<TInput,TOutput> Members
 
-        public TOutput Intercept(IHandler<TInput, TOutput> handler, TInput input) => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.Run(input));
+        public TOutput Intercept(IHandler<TInput, TOutput> handler, TInput input)
+            => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.Run(input));
 
         #endregion
     }

@@ -53,6 +53,7 @@ namespace Utils.Handlers.Extensions
             return new InterceptedAsyncHandler<TInput, TOutput>(interceptor, handler);
         }
 
+        [NotNull]
         public static IInterceptor<TInput, TOutput> Link<TInput, TOutput>([NotNull] this IInterceptor<TInput, TOutput> first,
                                                                           [NotNull]      IInterceptor<TInput, TOutput> second)
         {

@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace Utils.Handlers.Converters
 {
     [PublicAPI]
-    public interface IAsyncConverter<out TInput, TOutput, in TNewInput, TNewOutput>
+    public interface IFullAsyncConverter<out TInput, TOutput, in TNewInput, TNewOutput>
     {
         [NotNull]
         [ItemCanBeNull]

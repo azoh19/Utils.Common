@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Utils.Handlers.Extensions;
 using Utils.Handlers.Interceptors;
 
 #endregion
@@ -28,7 +29,8 @@ namespace Utils.Handlers.Common
 
         #region IAsyncInterceptor<TInput,TOutput> Members
 
-        public Task<TOutput> InterceptAsync(IAsyncHandler<TInput, TOutput> handler, TInput input) => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.RunAsync(input));
+        public Task<TOutput> InterceptAsync(IAsyncHandler<TInput, TOutput> handler, TInput input)
+            => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.RunAsync(input));
 
         #endregion
     }
