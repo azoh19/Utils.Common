@@ -8,10 +8,10 @@ using Utils.Handlers.Converters;
 namespace Utils.DispatchConfiguration.Configurators
 {
     [PublicAPI]
-    public interface IInputConverterConfigurator<TContainerOptions, in TInput, TOutput, TNewInput>
+    public interface IInputConverterConfigurator<in TInput, TOutput, TNewInput>
     {
         [NotNull]
-        IHandlerConfigurator<TContainerOptions, TNewInput, TOutput> By<TConverter>()
+        IHandlerConfigurator<TNewInput, TOutput> By<TConverter>()
             where TConverter : IInputConverter<TInput, TOutput, TNewInput>;
     }
 }

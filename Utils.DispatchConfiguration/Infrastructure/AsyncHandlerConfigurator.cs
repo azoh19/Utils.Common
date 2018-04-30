@@ -13,104 +13,96 @@ using Utils.Handlers.Interceptors;
 
 namespace Utils.DispatchConfiguration.Infrastructure
 {
-    internal sealed class AsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> : IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput>
+    internal sealed class AsyncHandlerConfigurator<TInput, TOutput> : IAsyncHandlerConfigurator<TInput, TOutput>
     {
-        [NotNull]
-        private readonly IContainerBridge<TContainerOptions> _bridge;
-
-        [NotNull]
-        private Func<IResolver, IAsyncHandler<TInput, TOutput>> _resolution;
-
-        public AsyncHandlerConfigurator([NotNull] IContainerBridge<TContainerOptions>             bridge,
-                                        [NotNull] Func<IResolver, IAsyncHandler<TInput, TOutput>> resolution)
+        public AsyncHandlerConfigurator([NotNull] Func<IResolver, IAsyncHandler<TInput, TOutput>> resolution)
         {
-            _bridge     = bridge     ?? throw new ArgumentNullException(nameof(bridge));
-            _resolution = resolution ?? throw new ArgumentNullException(nameof(resolution));
+            ResolveFunc = resolution ?? throw new ArgumentNullException(nameof(resolution));
         }
 
-        #region IAsyncHandlerConfigurator<TContainerOptions,TInput,TOutput> Members
+        #region IAsyncHandlerConfigurator<TInput,TOutput> Members
 
-        public IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> InterceptBy<TInterceptor>()
+        public IAsyncHandlerConfigurator<TInput, TOutput> InterceptBy<TInterceptor>()
             where TInterceptor : IAsyncInterceptor<TInput, TOutput>
         {
             IAsyncHandler<TInput, TOutput> Resolution(IResolver resolver)
             {
                 var interceptor = resolver.Resolve<TInterceptor>();
 
-                return _resolution(resolver).InterceptedBy(interceptor);
+                return ResolveFunc(resolver).InterceptedBy(interceptor);
             }
 
-            return new AsyncHandlerConfigurator<TContainerOptions, TInput, TOutput>(_bridge, Resolution);
+            return new AsyncHandlerConfigurator<TInput, TOutput>(Resolution);
         }
 
-        public IAsyncHandlerConfigurator<TContainerOptions, TNewInput, TNewOutput> ConvertBy<TConverter, TNewInput, TNewOutput>()
+        public IAsyncHandlerConfigurator<TNewInput, TNewOutput> ConvertBy<TConverter, TNewInput, TNewOutput>()
             where TConverter : IFullAsyncConverter<TInput, TOutput, TNewInput, TNewOutput>
         {
             IAsyncHandler<TNewInput, TNewOutput> Resolution(IResolver resolver)
             {
                 var converter = resolver.Resolve<TConverter>();
 
-                return _resolution(resolver).ConvertedBy(converter);
+                return ResolveFunc(resolver).ConvertedBy(converter);
             }
 
-            return new AsyncHandlerConfigurator<TContainerOptions, TNewInput, TNewOutput>(_bridge, Resolution);
+            return new AsyncHandlerConfigurator<TNewInput, TNewOutput>(Resolution);
         }
 
-        public IAsyncHandlerConfigurator<TContainerOptions, TNewInput, TOutput> ConvertInputBy<TConverter, TNewInput>()
+        public IAsyncHandlerConfigurator<TNewInput, TOutput> ConvertInputBy<TConverter, TNewInput>()
             where TConverter : IInputAsyncConverter<TInput, TOutput, TNewInput>
         {
             IAsyncHandler<TNewInput, TOutput> Resolution(IResolver resolver)
             {
                 var converter = resolver.Resolve<TConverter>();
 
-                return _resolution(resolver).ConvertedBy(converter);
+                return ResolveFunc(resolver).ConvertedBy(converter);
             }
 
-            return new AsyncHandlerConfigurator<TContainerOptions, TNewInput, TOutput>(_bridge, Resolution);
+            return new AsyncHandlerConfigurator<TNewInput, TOutput>(Resolution);
         }
 
-        public IAsyncHandlerConfigurator<TContainerOptions, TInput, TNewOutput> ConvertOutputBy<TConverter, TNewOutput>()
+        public IAsyncHandlerConfigurator<TInput, TNewOutput> ConvertOutputBy<TConverter, TNewOutput>()
             where TConverter : IOutputAsyncConverter<TInput, TOutput, TNewOutput>
         {
             IAsyncHandler<TInput, TNewOutput> Resolution(IResolver resolver)
             {
                 var converter = resolver.Resolve<TConverter>();
 
-                return _resolution(resolver).ConvertedBy(converter);
+                return ResolveFunc(resolver).ConvertedBy(converter);
             }
 
-            return new AsyncHandlerConfigurator<TContainerOptions, TInput, TNewOutput>(_bridge, Resolution);
+            return new AsyncHandlerConfigurator<TInput, TNewOutput>(Resolution);
         }
 
-        public IAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewInput, TNewOutput> ConvertTo<TNewInput, TNewOutput>()
+        public IAsyncConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput> ConvertTo<TNewInput, TNewOutput>()
             => new ConverterConfigurator<TNewInput, TNewOutput>(this);
 
-        public IInputAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewInput> ConvertInputTo<TNewInput>()
+        public IInputAsyncConverterConfigurator<TInput, TOutput, TNewInput> ConvertInputTo<TNewInput>() 
             => new InputConverterConfigurator<TNewInput>(this);
 
-        public IOutputAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>()
+        public IOutputAsyncConverterConfigurator<TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>()
             => new OutputConverterConfigurator<TNewOutput>(this);
 
-        public TContainerOptions Register() => _bridge.Register(_resolution);
+        public Func<IResolver, IAsyncHandler<TInput, TOutput>> ResolveFunc { get; }
 
         #endregion
 
         #region Nested type: ConverterConfigurator
 
         internal sealed class ConverterConfigurator<TNewInput, TNewOutput>
-            : IAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewInput, TNewOutput>
+            : IAsyncConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput>
         {
             [NotNull]
-            private readonly IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> _configurator;
+            private readonly IAsyncHandlerConfigurator<TInput, TOutput> _configurator;
 
-            public ConverterConfigurator([NotNull] IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> configurator)
+            public ConverterConfigurator([NotNull] IAsyncHandlerConfigurator<TInput, TOutput> configurator)
             {
                 _configurator = configurator;
             }
 
             #region IConverterConfigurator<TInput,TOutput,TNewInput,TNewOutput> Members
 
-            public IAsyncHandlerConfigurator<TContainerOptions, TNewInput, TNewOutput> By<TConverter>()
+            public IAsyncHandlerConfigurator<TNewInput, TNewOutput> By<TConverter>()
                 where TConverter : IFullAsyncConverter<TInput, TOutput, TNewInput, TNewOutput>
                 => _configurator.ConvertBy<TConverter, TNewInput, TNewOutput>();
 
@@ -122,19 +114,19 @@ namespace Utils.DispatchConfiguration.Infrastructure
         #region Nested type: InputConverterConfigurator
 
         internal sealed class InputConverterConfigurator<TNewInput>
-            : IInputAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewInput>
+            : IInputAsyncConverterConfigurator<TInput, TOutput, TNewInput>
         {
             [NotNull]
-            private readonly IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> _configurator;
+            private readonly IAsyncHandlerConfigurator<TInput, TOutput> _configurator;
 
-            public InputConverterConfigurator([NotNull] IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> configurator)
+            public InputConverterConfigurator([NotNull] IAsyncHandlerConfigurator<TInput, TOutput> configurator)
             {
                 _configurator = configurator;
             }
 
             #region Implementation of IInputConverterConfigurator<in TInput,TOutput,TNewInput>
 
-            public IAsyncHandlerConfigurator<TContainerOptions, TNewInput, TOutput> By<TConverter>()
+            public IAsyncHandlerConfigurator<TNewInput, TOutput> By<TConverter>()
                 where TConverter : IInputAsyncConverter<TInput, TOutput, TNewInput>
                 => _configurator.ConvertInputBy<TConverter, TNewInput>();
 
@@ -146,19 +138,19 @@ namespace Utils.DispatchConfiguration.Infrastructure
         #region Nested type: OutputConverterConfigurator
 
         internal sealed class OutputConverterConfigurator<TNewOutput>
-            : IOutputAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewOutput>
+            : IOutputAsyncConverterConfigurator<TInput, TOutput, TNewOutput>
         {
             [NotNull]
-            private readonly IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> _configurator;
+            private readonly IAsyncHandlerConfigurator<TInput, TOutput> _configurator;
 
-            public OutputConverterConfigurator([NotNull] IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> configurator)
+            public OutputConverterConfigurator([NotNull] IAsyncHandlerConfigurator<TInput, TOutput> configurator)
             {
                 _configurator = configurator;
             }
 
             #region Implementation of IOutputConverterConfigurator<TInput,out TOutput,TNewOutput>
 
-            public IAsyncHandlerConfigurator<TContainerOptions, TInput, TNewOutput> By<TConverter>()
+            public IAsyncHandlerConfigurator<TInput, TNewOutput> By<TConverter>()
                 where TConverter : IOutputAsyncConverter<TInput, TOutput, TNewOutput>
                 => _configurator.ConvertOutputBy<TConverter, TNewOutput>();
 

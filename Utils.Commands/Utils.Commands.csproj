@@ -5,10 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.0" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Utils.AbstractDI\Utils.AbstractDI.csproj" />
+    <ProjectReference Include="..\Utils.DispatchConfiguration\Utils.DispatchConfiguration.csproj" />
     <ProjectReference Include="..\Utils.Handlers\Utils.Handlers.csproj" />
   </ItemGroup>
 

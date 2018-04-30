@@ -1,6 +1,10 @@
 ﻿#region Using
 
+using System;
 using JetBrains.Annotations;
+using Utils.AbstractDI;
+using Utils.DispatchConfiguration.Infrastructure;
+using Utils.Handlers;
 using Utils.Handlers.Converters;
 using Utils.Handlers.Interceptors;
 
@@ -9,34 +13,34 @@ using Utils.Handlers.Interceptors;
 namespace Utils.DispatchConfiguration.Configurators
 {
     [PublicAPI]
-    public interface IHandlerConfigurator<TContainerOptions, TInput, TOutput>
+    public interface IHandlerConfigurator<TInput, TOutput>
     {
         [NotNull]
-        IHandlerConfigurator<TContainerOptions, TInput, TOutput> InterceptBy<TInterceptor>()
+        IHandlerConfigurator<TInput, TOutput> InterceptBy<TInterceptor>()
             where TInterceptor : IInterceptor<TInput, TOutput>;
 
         [NotNull]
-        IHandlerConfigurator<TContainerOptions, TNewInput, TNewOutput> ConvertBy<TConverter, TNewInput, TNewOutput>()
+        IHandlerConfigurator<TNewInput, TNewOutput> ConvertBy<TConverter, TNewInput, TNewOutput>()
             where TConverter : IFullConverter<TInput, TOutput, TNewInput, TNewOutput>;
 
         [NotNull]
-        IHandlerConfigurator<TContainerOptions, TNewInput, TOutput> ConvertInputBy<TConverter, TNewInput>()
+        IHandlerConfigurator<TNewInput, TOutput> ConvertInputBy<TConverter, TNewInput>()
             where TConverter : IInputConverter<TInput, TOutput, TNewInput>;
 
         [NotNull]
-        IHandlerConfigurator<TContainerOptions, TInput, TNewOutput> ConvertOutputBy<TConverter, TNewOutput>()
+        IHandlerConfigurator<TInput, TNewOutput> ConvertOutputBy<TConverter, TNewOutput>()
             where TConverter : IOutputConverter<TInput, TOutput, TNewOutput>;
 
         [NotNull]
-        IConverterConfigurator<TContainerOptions, TInput, TOutput, TNewInput, TNewOutput> ConvertTo<TNewInput, TNewOutput>();
+        IConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput> ConvertTo<TNewInput, TNewOutput>();
 
         [NotNull]
-        IInputConverterConfigurator<TContainerOptions, TInput, TOutput, TNewInput> ConvertInputTo<TNewInput>();
+        IInputConverterConfigurator<TInput, TOutput, TNewInput> ConvertInputTo<TNewInput>();
 
         [NotNull]
-        IOutputConverterConfigurator<TContainerOptions, TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>();
+        IOutputConverterConfigurator<TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>();
 
         [NotNull]
-        TContainerOptions Register();
+        Func<IResolver, IHandler<TInput, TOutput>> ResolveFunc { get; }
     }
 }

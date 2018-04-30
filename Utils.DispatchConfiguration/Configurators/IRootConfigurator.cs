@@ -8,18 +8,10 @@ using Utils.Handlers;
 namespace Utils.DispatchConfiguration.Configurators
 {
     [PublicAPI]
-    public interface IRootConfigurator<TContainerOptions>
+    public interface IRootConfigurator
     {
         [NotNull]
-        IHandlerConfigurator<TContainerOptions, TInput, TOutput> TakeHandler<THandler, TInput, TOutput>()
+        IHandlerConfigurator<TInput, TOutput> TakeHandler<THandler, TInput, TOutput>()
             where THandler : IHandler<TInput, TOutput>;
-    }
-
-    [PublicAPI]
-    public interface IRootAsyncConfigurator<TContainerOptions>
-    {
-        [NotNull]
-        IAsyncHandlerConfigurator<TContainerOptions, TInput, TOutput> TakeAsyncHandler<THandler, TInput, TOutput>()
-            where THandler : IAsyncHandler<TInput, TOutput>;
     }
 }

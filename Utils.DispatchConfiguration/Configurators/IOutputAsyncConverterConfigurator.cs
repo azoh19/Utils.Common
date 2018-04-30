@@ -8,10 +8,10 @@ using Utils.Handlers.Converters;
 namespace Utils.DispatchConfiguration.Configurators
 {
     [PublicAPI]
-    public interface IOutputAsyncConverterConfigurator<TContainerOptions, TInput, TOutput, TNewOutput>
+    public interface IOutputAsyncConverterConfigurator<TInput, TOutput, TNewOutput>
     {
         [NotNull]
-        IAsyncHandlerConfigurator<TContainerOptions, TInput, TNewOutput> By<TConverter>()
+        IAsyncHandlerConfigurator<TInput, TNewOutput> By<TConverter>()
             where TConverter : IOutputAsyncConverter<TInput, TOutput, TNewOutput>;
     }
 }
