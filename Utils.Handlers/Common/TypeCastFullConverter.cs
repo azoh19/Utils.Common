@@ -14,7 +14,7 @@ namespace Utils.Handlers.Common
     {
         #region IConverter<TInput,TOutput,TNewInput,TNewOutput> Members
 
-        public TNewOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input) => handler.Run(input);
+        public TNewOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input) => handler.Handle(input);
 
         #endregion
     }

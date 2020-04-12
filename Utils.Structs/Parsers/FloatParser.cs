@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static float? Parse(string value) => float.TryParse(value, out var result) ? result : (float?)null;
 
-        public static float ParseOrDefault(string value, float @default = default(float)) => Parse(value) ?? @default;
+        public static float ParseOrDefault(string value, float @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<float>
 

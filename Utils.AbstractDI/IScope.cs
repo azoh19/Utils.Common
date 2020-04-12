@@ -8,8 +8,12 @@ using JetBrains.Annotations;
 namespace Utils.AbstractDI
 {
     [PublicAPI]
-    public interface IScope : IResolver, IDisposable
+    public interface IScope : IDisposable
     {
+        [NotNull]
         IScope BeginScope();
+
+        [NotNull]
+        IResolver GetResolver();
     }
 }

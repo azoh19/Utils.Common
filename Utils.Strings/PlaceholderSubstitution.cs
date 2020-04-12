@@ -11,19 +11,19 @@ namespace Utils.Strings
     [PublicAPI]
     public sealed class PlaceholderSubstitution
     {
-        public PlaceholderSubstitution([NotNull] Func<string, string> substititeKey,
+        public PlaceholderSubstitution([NotNull] Func<string, string> substitute,
                                        [NotNull] string               prefix     = "{",
                                        [NotNull] string               postfix    = "}",
                                        StringComparison               comparison = StringComparison.OrdinalIgnoreCase)
         {
-            SubstititeKey = substititeKey ?? throw new ArgumentNullException(nameof(substititeKey));
-            Prefix        = prefix        ?? throw new ArgumentNullException(nameof(prefix));
-            Postfix       = postfix       ?? throw new ArgumentNullException(nameof(postfix));
-            Comparison    = comparison;
+            Substitute = substitute ?? throw new ArgumentNullException(nameof(substitute));
+            Prefix     = prefix     ?? throw new ArgumentNullException(nameof(prefix));
+            Postfix    = postfix    ?? throw new ArgumentNullException(nameof(postfix));
+            Comparison = comparison;
         }
 
-        private Func<string, string> SubstititeKey { get; }
-        private StringComparison     Comparison    { get; }
+        private Func<string, string> Substitute { get; }
+        private StringComparison     Comparison { get; }
 
         private string Prefix  { get; }
         private string Postfix { get; }
@@ -41,7 +41,7 @@ namespace Utils.Strings
             var currentPosition = 0;
             var currentTagStart = source.IndexOf(Prefix, Comparison);
 
-            if (currentTagStart < 0) // prefix not found, nothig to replace, return source as is
+            if (currentTagStart < 0) // prefix not found, nothing to replace, return source as is
                 return source;
 
             var sourceLength = source.Length;
@@ -58,7 +58,7 @@ namespace Utils.Strings
                 var keyStart = currentTagStart + PrefixLength;
                 var key      = source.Substring(keyStart, currentTagEnd - keyStart).Trim();
 
-                var value = SubstititeKey(key);
+                var value = Substitute(key);
 
                 if (value != null) // if substitution found, replace placeholder
                     sb.Append(source, currentPosition, currentTagStart - currentPosition).Append(value);

@@ -10,6 +10,6 @@ namespace Utils.Handlers
     [PublicAPI]
     public interface IAsyncHandler<in TInput, TOutput>
     {
-        Task<TOutput> RunAsync(TInput input);
+        Task<TOutput> HandleAsync(TInput input);
     }
 }

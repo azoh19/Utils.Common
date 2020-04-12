@@ -3,7 +3,6 @@
 using System;
 using JetBrains.Annotations;
 using Utils.DispatchConfiguration.Configurators;
-using Utils.Handlers;
 
 #endregion
 
@@ -21,9 +20,11 @@ namespace Utils.DispatchConfiguration.Infrastructure
 
         #region IRootConfigurator<TRegistrationOptions> Members
 
-        public IHandlerConfigurator<TInput, TOutput> TakeHandler<THandler, TInput, TOutput>()
-            where THandler : IHandler<TInput, TOutput>
+        IHandlerConfigurator<TInput, TOutput> IRootConfigurator.Take<THandler, TInput, TOutput>()
             => new HandlerConfigurator<TInput, TOutput>(resolver => resolver.Resolve<THandler>());
+
+        IAsyncHandlerConfigurator<TInput, TOutput> IRootConfigurator.TakeAsync<THandler, TInput, TOutput>()
+            => new AsyncHandlerConfigurator<TInput, TOutput>(resolver => resolver.Resolve<THandler>());
 
         #endregion
     }

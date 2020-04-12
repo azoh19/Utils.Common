@@ -9,6 +9,6 @@ namespace Utils.Handlers
     [PublicAPI]
     public interface IHandler<in TInput, out TOutput>
     {
-        TOutput Run(TInput input);
+        TOutput Handle(TInput input);
     }
 }

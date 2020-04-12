@@ -12,7 +12,7 @@ namespace Utils.Structs.Parsers
     {
         public static TEnum? Parse<TEnum>(string value) where TEnum : struct => Enum.TryParse(value, true, out TEnum result) ? result : (TEnum?)null;
 
-        public static TEnum ParseOrDefault<TEnum>(string value, TEnum @default = default(TEnum)) where TEnum : struct => Parse<TEnum>(value) ?? @default;
+        public static TEnum ParseOrDefault<TEnum>(string value, TEnum @default = default) where TEnum : struct => Parse<TEnum>(value) ?? @default;
     }
 
     [PublicAPI]

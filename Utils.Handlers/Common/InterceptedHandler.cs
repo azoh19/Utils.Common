@@ -23,7 +23,7 @@ namespace Utils.Handlers.Common
 
         #region IHandler<TInput,TOutput> Members
 
-        public TOutput Run(TInput input) => _innerInterceptor.Intercept(_innerHandler, input);
+        public TOutput Handle(TInput input) => _innerInterceptor.Intercept(_innerHandler, input);
 
         #endregion
     }

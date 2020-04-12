@@ -5,90 +5,90 @@ using JetBrains.Annotations;
 using Utils.AbstractDI;
 using Utils.DispatchConfiguration.Configurators;
 using Utils.Handlers;
-using Utils.Handlers.Converters;
 using Utils.Handlers.Extensions;
-using Utils.Handlers.Interceptors;
 
 #endregion
 
 namespace Utils.DispatchConfiguration.Infrastructure
 {
-    internal sealed class HandlerConfigurator<TInput, TOutput> : IHandlerConfigurator<TInput, TOutput>
+    internal sealed class HandlerConfigurator<TInput, TOutput>
+        : IHandlerConfigurator<TInput, TOutput>
     {
+        [NotNull]
+        private readonly Func<IResolver, IHandler<TInput, TOutput>> _buildHandler;
+
         public HandlerConfigurator([NotNull] Func<IResolver, IHandler<TInput, TOutput>> resolution)
         {
-            ResolveFunc = resolution ?? throw new ArgumentNullException(nameof(resolution));
+            _buildHandler = resolution ?? throw new ArgumentNullException(nameof(resolution));
         }
 
         #region IHandlerConfigurator<TInput,TOutput> Members
 
-        public IHandlerConfigurator<TInput, TOutput> InterceptBy<TInterceptor>() where TInterceptor : IInterceptor<TInput, TOutput>
+        IHandlerConfigurator<TInput, TOutput> IHandlerConfigurator<TInput, TOutput>.InterceptBy<TInterceptor>()
         {
-            IHandler<TInput, TOutput> Resolution(IResolver resolver)
+            IHandler<TInput, TOutput> Build(IResolver resolver)
             {
                 var interceptor = resolver.Resolve<TInterceptor>();
 
-                return ResolveFunc(resolver).InterceptedBy(interceptor);
+                return _buildHandler(resolver).InterceptedBy(interceptor);
             }
 
-            return new HandlerConfigurator<TInput, TOutput>(Resolution);
+            return new HandlerConfigurator<TInput, TOutput>(Build);
         }
 
-        public IHandlerConfigurator<TNewInput, TNewOutput> ConvertBy<TConverter, TNewInput, TNewOutput>()
-            where TConverter : IFullConverter<TInput, TOutput, TNewInput, TNewOutput>
+        IHandlerConfigurator<TNewInput, TNewOutput> IHandlerConfigurator<TInput, TOutput>.ConvertBy<TConverter, TNewInput, TNewOutput>()
         {
-            IHandler<TNewInput, TNewOutput> Resolution(IResolver resolver)
+            IHandler<TNewInput, TNewOutput> Build(IResolver resolver)
             {
                 var converter = resolver.Resolve<TConverter>();
 
-                return ResolveFunc(resolver).ConvertedBy(converter);
+                return _buildHandler(resolver).ConvertedBy(converter);
             }
 
-            return new HandlerConfigurator<TNewInput, TNewOutput>(Resolution);
+            return new HandlerConfigurator<TNewInput, TNewOutput>(Build);
         }
 
-        public IHandlerConfigurator<TNewInput, TOutput> ConvertInputBy<TConverter, TNewInput>()
-            where TConverter : IInputConverter<TInput, TOutput, TNewInput>
+        IHandlerConfigurator<TNewInput, TOutput> IHandlerConfigurator<TInput, TOutput>.ConvertInputBy<TConverter, TNewInput>()
         {
-            IHandler<TNewInput, TOutput> Resolution(IResolver resolver)
+            IHandler<TNewInput, TOutput> Build(IResolver resolver)
             {
                 var converter = resolver.Resolve<TConverter>();
 
-                return ResolveFunc(resolver).ConvertedBy(converter);
+                return _buildHandler(resolver).ConvertedBy(converter);
             }
 
-            return new HandlerConfigurator<TNewInput, TOutput>(Resolution);
+            return new HandlerConfigurator<TNewInput, TOutput>(Build);
         }
 
-        public IHandlerConfigurator<TInput, TNewOutput> ConvertOutputBy<TConverter, TNewOutput>()
-            where TConverter : IOutputConverter<TInput, TOutput, TNewOutput>
+        IHandlerConfigurator<TInput, TNewOutput> IHandlerConfigurator<TInput, TOutput>.ConvertOutputBy<TConverter, TNewOutput>()
         {
-            IHandler<TInput, TNewOutput> Resolution(IResolver resolver)
+            IHandler<TInput, TNewOutput> Build(IResolver resolver)
             {
                 var converter = resolver.Resolve<TConverter>();
 
-                return ResolveFunc(resolver).ConvertedBy(converter);
+                return _buildHandler(resolver).ConvertedBy(converter);
             }
 
-            return new HandlerConfigurator<TInput, TNewOutput>(Resolution);
+            return new HandlerConfigurator<TInput, TNewOutput>(Build);
         }
 
-        public IConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput> ConvertTo<TNewInput, TNewOutput>()
+        IConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput> IHandlerConfigurator<TInput, TOutput>.ConvertTo<TNewInput, TNewOutput>()
             => new ConverterConfigurator<TNewInput, TNewOutput>(this);
 
-        public IInputConverterConfigurator<TInput, TOutput, TNewInput> ConvertInputTo<TNewInput>()
+        IInputConverterConfigurator<TInput, TOutput, TNewInput> IHandlerConfigurator<TInput, TOutput>.ConvertInputTo<TNewInput>()
             => new InputConverterConfigurator<TNewInput>(this);
 
-        public IOutputConverterConfigurator<TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>()
+        IOutputConverterConfigurator<TInput, TOutput, TNewOutput> IHandlerConfigurator<TInput, TOutput>.ConvertOutputTo<TNewOutput>()
             => new OutputConverterConfigurator<TNewOutput>(this);
 
-        public Func<IResolver, IHandler<TInput, TOutput>> ResolveFunc { get; }
+        Func<IResolver, IHandler<TInput, TOutput>> IHandlerConfigurator<TInput, TOutput>.BuildHandler => _buildHandler;
 
         #endregion
 
         #region Nested type: ConverterConfigurator
 
-        internal sealed class ConverterConfigurator<TNewInput, TNewOutput> : IConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput>
+        internal sealed class ConverterConfigurator<TNewInput, TNewOutput>
+            : IConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput>
         {
             [NotNull]
             private readonly IHandlerConfigurator<TInput, TOutput> _configurator;
@@ -100,8 +100,7 @@ namespace Utils.DispatchConfiguration.Infrastructure
 
             #region IConverterConfigurator<TInput,TOutput,TNewInput,TNewOutput> Members
 
-            public IHandlerConfigurator<TNewInput, TNewOutput> By<TConverter>()
-                where TConverter : IFullConverter<TInput, TOutput, TNewInput, TNewOutput>
+            IHandlerConfigurator<TNewInput, TNewOutput> IConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput>.By<TConverter>()
                 => _configurator.ConvertBy<TConverter, TNewInput, TNewOutput>();
 
             #endregion
@@ -111,7 +110,8 @@ namespace Utils.DispatchConfiguration.Infrastructure
 
         #region Nested type: InputConverterConfigurator
 
-        internal sealed class InputConverterConfigurator<TNewInput> : IInputConverterConfigurator<TInput, TOutput, TNewInput>
+        internal sealed class InputConverterConfigurator<TNewInput>
+            : IInputConverterConfigurator<TInput, TOutput, TNewInput>
         {
             [NotNull]
             private readonly IHandlerConfigurator<TInput, TOutput> _configurator;
@@ -123,8 +123,7 @@ namespace Utils.DispatchConfiguration.Infrastructure
 
             #region Implementation of IInputConverterConfigurator<in TInput,TOutput,TNewInput>
 
-            public IHandlerConfigurator<TNewInput, TOutput> By<TConverter>()
-                where TConverter : IInputConverter<TInput, TOutput, TNewInput>
+            IHandlerConfigurator<TNewInput, TOutput> IInputConverterConfigurator<TInput, TOutput, TNewInput>.By<TConverter>()
                 => _configurator.ConvertInputBy<TConverter, TNewInput>();
 
             #endregion
@@ -134,7 +133,8 @@ namespace Utils.DispatchConfiguration.Infrastructure
 
         #region Nested type: OutputConverterConfigurator
 
-        internal sealed class OutputConverterConfigurator<TNewOutput> : IOutputConverterConfigurator<TInput, TOutput, TNewOutput>
+        internal sealed class OutputConverterConfigurator<TNewOutput>
+            : IOutputConverterConfigurator<TInput, TOutput, TNewOutput>
         {
             [NotNull]
             private readonly IHandlerConfigurator<TInput, TOutput> _configurator;
@@ -146,8 +146,7 @@ namespace Utils.DispatchConfiguration.Infrastructure
 
             #region Implementation of IOutputConverterConfigurator<TInput,out TOutput,TNewOutput>
 
-            public IHandlerConfigurator<TInput, TNewOutput> By<TConverter>()
-                where TConverter : IOutputConverter<TInput, TOutput, TNewOutput>
+            IHandlerConfigurator<TInput, TNewOutput> IOutputConverterConfigurator<TInput, TOutput, TNewOutput>.By<TConverter>()
                 => _configurator.ConvertOutputBy<TConverter, TNewOutput>();
 
             #endregion

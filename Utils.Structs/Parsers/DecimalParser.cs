@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static decimal? Parse(string value) => decimal.TryParse(value, out var result) ? result : (decimal?)null;
 
-        public static decimal ParseOrDefault(string value, decimal @default = default(decimal)) => Parse(value) ?? @default;
+        public static decimal ParseOrDefault(string value, decimal @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<decimal>
 

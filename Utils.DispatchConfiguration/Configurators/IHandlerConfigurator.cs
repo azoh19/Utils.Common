@@ -3,7 +3,6 @@
 using System;
 using JetBrains.Annotations;
 using Utils.AbstractDI;
-using Utils.DispatchConfiguration.Infrastructure;
 using Utils.Handlers;
 using Utils.Handlers.Converters;
 using Utils.Handlers.Interceptors;
@@ -41,6 +40,6 @@ namespace Utils.DispatchConfiguration.Configurators
         IOutputConverterConfigurator<TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>();
 
         [NotNull]
-        Func<IResolver, IHandler<TInput, TOutput>> ResolveFunc { get; }
+        Func<IResolver, IHandler<TInput, TOutput>> BuildHandler { get; }
     }
 }

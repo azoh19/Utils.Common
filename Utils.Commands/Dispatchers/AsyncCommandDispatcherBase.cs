@@ -25,11 +25,11 @@ namespace Utils.Commands.Dispatchers
 
         public Task<ICommandResult> DispatchAsync<TCommand>(TCommand command)
             where TCommand : ICommand
-            => Resolver.Resolve<IAsyncHandler<TCommand, ICommandResult>>().RunAsync(command);
+            => Resolver.Resolve<IAsyncHandler<TCommand, ICommandResult>>().HandleAsync(command);
 
         public Task<ICommandResult<TResult>> DispatchAsync<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
-            => Resolver.Resolve<IAsyncHandler<TCommand, ICommandResult<TResult>>>().RunAsync(command);
+            => Resolver.Resolve<IAsyncHandler<TCommand, ICommandResult<TResult>>>().HandleAsync(command);
 
         #endregion
     }

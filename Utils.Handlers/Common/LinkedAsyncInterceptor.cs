@@ -30,7 +30,7 @@ namespace Utils.Handlers.Common
         #region IAsyncInterceptor<TInput,TOutput> Members
 
         public Task<TOutput> InterceptAsync(IAsyncHandler<TInput, TOutput> handler, TInput input)
-            => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.RunAsync(input));
+            => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.HandleAsync(input));
 
         #endregion
     }

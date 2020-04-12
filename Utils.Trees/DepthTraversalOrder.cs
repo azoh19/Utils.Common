@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 #endregion
 
-namespace Utils.Trees.Binary
+namespace Utils.Trees
 {
     [PublicAPI]
     public enum DepthTraversalOrder

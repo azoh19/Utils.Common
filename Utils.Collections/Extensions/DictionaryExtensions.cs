@@ -11,7 +11,7 @@ namespace Utils.Collections.Extensions
     public static class DictionaryExtensions
     {
         [CanBeNull]
-        public static TValue GetOrDefault<TKey, TValue>([NotNull] this IDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default(TValue))
+        public static TValue GetOrDefault<TKey, TValue>([NotNull] this IDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default)
             => dictionary.TryGetValue(key, out var value) ? value : @default;
 
         [CanBeNull]
@@ -19,7 +19,7 @@ namespace Utils.Collections.Extensions
             => dictionary.TryGetValue(key, out var value) ? value : (TValue?)null;
 
         [CanBeNull]
-        public static TValue GetOrDefault<TKey, TValue>([NotNull] this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default(TValue))
+        public static TValue GetOrDefault<TKey, TValue>([NotNull] this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default)
             => dictionary.TryGetValue(key, out var value) ? value : @default;
 
         [CanBeNull]

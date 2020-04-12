@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static double? Parse(string value) => double.TryParse(value, out var result) ? result : (double?)null;
 
-        public static double ParseOrDefault(string value, double @default = default(double)) => Parse(value) ?? @default;
+        public static double ParseOrDefault(string value, double @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<double>
 

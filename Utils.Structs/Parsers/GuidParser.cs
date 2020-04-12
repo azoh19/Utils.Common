@@ -12,7 +12,7 @@ namespace Utils.Structs.Parsers
     {
         public static Guid? Parse(string value) => Guid.TryParse(value, out var result) ? result : (Guid?)null;
 
-        public static Guid ParseOrDefault(string value, Guid @default = default(Guid)) => Parse(value) ?? @default;
+        public static Guid ParseOrDefault(string value, Guid @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<Guid>
 

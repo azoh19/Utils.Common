@@ -24,7 +24,7 @@ namespace Utils.Handlers.Common
 
         #region IAsyncHandler<TInput,TNewOutput> Members
 
-        public Task<TNewOutput> RunAsync(TInput input) => _innerConverter.ConvertAsync(_innerHandler, input);
+        public Task<TNewOutput> HandleAsync(TInput input) => _innerConverter.ConvertAsync(_innerHandler, input);
 
         #endregion
     }

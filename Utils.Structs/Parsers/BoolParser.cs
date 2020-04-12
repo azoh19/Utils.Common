@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static bool? Parse(string value) => bool.TryParse(value, out var result) ? result : (bool?)null;
 
-        public static bool ParseOrDefault(string value, bool @default = default(bool)) => Parse(value) ?? @default;
+        public static bool ParseOrDefault(string value, bool @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<bool>
 

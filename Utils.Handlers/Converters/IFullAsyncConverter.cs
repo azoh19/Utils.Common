@@ -12,6 +12,6 @@ namespace Utils.Handlers.Converters
     {
         [NotNull]
         [ItemCanBeNull]
-        Task<TNewOutput> ConvertAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TNewInput output);
+        Task<TNewOutput> ConvertAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TNewInput input);
     }
 }

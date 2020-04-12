@@ -12,7 +12,7 @@ namespace Utils.Structs.Parsers
     {
         public static TimeSpan? Parse(string value) => TimeSpan.TryParse(value, out var result) ? result : (TimeSpan?)null;
 
-        public static TimeSpan ParseOrDefault(string value, TimeSpan @default = default(TimeSpan)) => Parse(value) ?? @default;
+        public static TimeSpan ParseOrDefault(string value, TimeSpan @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<TimeSpan>
 

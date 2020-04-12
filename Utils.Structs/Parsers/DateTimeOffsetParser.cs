@@ -12,7 +12,7 @@ namespace Utils.Structs.Parsers
     {
         public static DateTimeOffset? Parse(string value) => DateTimeOffset.TryParse(value, out var result) ? result : (DateTimeOffset?)null;
 
-        public static DateTimeOffset ParseOrDefault(string value, DateTimeOffset @default = default(DateTimeOffset)) => Parse(value) ?? @default;
+        public static DateTimeOffset ParseOrDefault(string value, DateTimeOffset @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<DateTimeOffset>
 

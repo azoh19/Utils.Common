@@ -24,11 +24,11 @@ namespace Utils.Commands.Dispatchers
 
         public ICommandResult Dispatch<TCommand>(TCommand command)
             where TCommand : ICommand
-            => Resolver.Resolve<IHandler<TCommand, ICommandResult>>().Run(command);
+            => Resolver.Resolve<IHandler<TCommand, ICommandResult>>().Handle(command);
 
         public ICommandResult<TResult> Dispatch<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
-            => Resolver.Resolve<IHandler<TCommand, ICommandResult<TResult>>>().Run(command);
+            => Resolver.Resolve<IHandler<TCommand, ICommandResult<TResult>>>().Handle(command);
 
         #endregion
     }

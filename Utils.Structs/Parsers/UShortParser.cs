@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static ushort? Parse(string value) => ushort.TryParse(value, out var result) ? result : (ushort?)null;
 
-        public static ushort ParseOrDefault(string value, ushort @default = default(ushort)) => Parse(value) ?? @default;
+        public static ushort ParseOrDefault(string value, ushort @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<ushort>
 

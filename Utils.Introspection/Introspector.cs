@@ -21,8 +21,11 @@ namespace Utils.Introspection
             Fill();
         }
 
-        protected Dictionary<string, Func<T, object>>             Functions   { get; } = new Dictionary<string, Func<T, object>>();
-        protected Dictionary<string, Expression<Func<T, object>>> Expressions { get; } = new Dictionary<string, Expression<Func<T, object>>>();
+        protected Dictionary<string, Func<T, object>> Functions { get; }
+            = new Dictionary<string, Func<T, object>>();
+
+        protected Dictionary<string, Expression<Func<T, object>>> Expressions { get; }
+            = new Dictionary<string, Expression<Func<T, object>>>();
 
         #region IAccessor<T> Members
 
@@ -55,10 +58,10 @@ namespace Utils.Introspection
                 var parameter = Expression.Parameter(typeof(T), "obj");
                 var member    = Expression.Property(parameter, property);
                 var convert   = Expression.Convert(member, typeof(object));
-                var lmbdda    = Expression.Lambda<Func<T, object>>(convert, parameter);
+                var lambda    = Expression.Lambda<Func<T, object>>(convert, parameter);
 
-                Expressions[property.Name] = lmbdda;
-                Functions[property.Name]   = lmbdda.Compile();
+                Expressions[property.Name] = lambda;
+                Functions[property.Name]   = lambda.Compile();
             }
         }
 

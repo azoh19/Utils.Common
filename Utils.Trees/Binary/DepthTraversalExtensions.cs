@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace Utils.Trees.Binary
 {
     [PublicAPI]
-    public static class DepthTraversalExtension
+    public static class DepthTraversalExtensions
     {
         [NotNull]
         [ItemNotNull]

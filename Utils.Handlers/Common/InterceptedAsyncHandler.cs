@@ -23,7 +23,7 @@ namespace Utils.Handlers.Common
 
         #region IAsyncHandler<TInput,TOutput> Members
 
-        public Task<TOutput> RunAsync(TInput input) => _innerInterceptor.InterceptAsync(_innerHandler, input);
+        public Task<TOutput> HandleAsync(TInput input) => _innerInterceptor.InterceptAsync(_innerHandler, input);
 
         #endregion
     }

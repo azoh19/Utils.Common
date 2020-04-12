@@ -1,16 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Utils.AbstractDI\Utils.AbstractDI.csproj" />
     <ProjectReference Include="..\Utils.Handlers\Utils.Handlers.csproj" />
   </ItemGroup>
-
 </Project>

@@ -36,7 +36,9 @@ namespace Utils.Collections.Extensions
             return DistinctByIterator(source, selector, comparer ?? EqualityComparer<TKey>.Default);
         }
 
-        private static IEnumerable<TSource> DistinctByIterator<TSource, TKey>(IEnumerable<TSource> source, Func<TSource, TKey> selector, IEqualityComparer<TKey> comparer)
+        private static IEnumerable<TSource> DistinctByIterator<TSource, TKey>(IEnumerable<TSource>    source,
+                                                                              Func<TSource, TKey>     selector,
+                                                                              IEqualityComparer<TKey> comparer)
         {
             var set = new HashSet<TKey>(comparer);
             return source.Where(e => set.Add(selector(e)));
@@ -47,6 +49,7 @@ namespace Utils.Collections.Extensions
         public static IEnumerable<T> SkipNulls<T>([NotNull] [ItemCanBeNull] this IEnumerable<T> source) where T : class => source.Where(e => e != null);
 
         [NotNull]
-        public static IEnumerable<T> SkipNulls<T>([NotNull] this IEnumerable<T?> source) where T : struct => source.Where(item => item.HasValue).Select(item => item.Value);
+        public static IEnumerable<T> SkipNulls<T>([NotNull] this IEnumerable<T?> source) where T : struct
+            => source.Where(item => item.HasValue).Select(item => item.Value);
     }
 }

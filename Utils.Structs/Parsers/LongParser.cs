@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static long? Parse(string value) => long.TryParse(value, out var result) ? result : (long?)null;
 
-        public static long ParseOrDefault(string value, long @default = default(long)) => Parse(value) ?? @default;
+        public static long ParseOrDefault(string value, long @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<long>
 

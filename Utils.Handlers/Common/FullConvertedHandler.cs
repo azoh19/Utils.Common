@@ -23,7 +23,7 @@ namespace Utils.Handlers.Common
 
         #region IHandler<TNewInput,TNewOutput> Members
 
-        public TNewOutput Run(TNewInput input) => _innerFullConverter.Convert(_innerHandler, input);
+        public TNewOutput Handle(TNewInput input) => _innerFullConverter.Convert(_innerHandler, input);
 
         #endregion
     }

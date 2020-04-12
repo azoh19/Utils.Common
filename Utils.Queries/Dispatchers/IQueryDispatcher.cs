@@ -1,9 +1,5 @@
 ﻿#region Using
 
-#endregion
-
-#region Using
-
 using JetBrains.Annotations;
 
 #endregion

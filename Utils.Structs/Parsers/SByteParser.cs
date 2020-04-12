@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static sbyte? Parse(string value) => sbyte.TryParse(value, out var result) ? result : (sbyte?)null;
 
-        public static sbyte ParseOrDefault(string value, sbyte @default = default(sbyte)) => Parse(value) ?? @default;
+        public static sbyte ParseOrDefault(string value, sbyte @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<sbyte>
 

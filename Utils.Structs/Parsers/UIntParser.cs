@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static uint? Parse(string value) => uint.TryParse(value, out var result) ? result : (uint?)null;
 
-        public static uint ParseOrDefault(string value, uint @default = default(uint)) => Parse(value) ?? @default;
+        public static uint ParseOrDefault(string value, uint @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<uint>
 

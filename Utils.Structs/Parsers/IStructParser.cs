@@ -12,6 +12,6 @@ namespace Utils.Structs.Parsers
         [CanBeNull]
         T? Parse([CanBeNull] string value);
 
-        T ParseOrDefault([CanBeNull] string value, T @default);
+        T ParseOrDefault([CanBeNull] string value, T @default = default);
     }
 }

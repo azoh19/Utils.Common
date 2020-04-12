@@ -12,7 +12,7 @@ namespace Utils.Structs.Parsers
     {
         public static DateTime? Parse(string value) => DateTime.TryParse(value, out var result) ? result : (DateTime?)null;
 
-        public static DateTime ParseOrDefault(string value, DateTime @default = default(DateTime)) => Parse(value) ?? @default;
+        public static DateTime ParseOrDefault(string value, DateTime @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<DateTime>
 

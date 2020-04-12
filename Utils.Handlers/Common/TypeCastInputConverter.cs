@@ -13,7 +13,7 @@ namespace Utils.Handlers.Common
     {
         #region IInputConverter<TInput,TOutput,TNewInput> Members
 
-        public TOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input) => handler.Run(input);
+        public TOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input) => handler.Handle(input);
 
         #endregion
     }

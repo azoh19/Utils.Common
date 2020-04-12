@@ -11,7 +11,7 @@ namespace Utils.Structs.Parsers
     {
         public static short? Parse(string value) => short.TryParse(value, out var result) ? result : (short?)null;
 
-        public static short ParseOrDefault(string value, short @default = default(short)) => Parse(value) ?? @default;
+        public static short ParseOrDefault(string value, short @default = default) => Parse(value) ?? @default;
 
         #region Implementation of IStructParser<short>
 
