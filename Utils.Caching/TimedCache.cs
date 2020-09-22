@@ -8,13 +8,13 @@ using JetBrains.Annotations;
 namespace Utils.Caching
 {
     [PublicAPI]
-    public class TimedCache<T>
+    public class TimedCache<TData>
     {
         private readonly TimeSpan _cachePeriod;
 
         private readonly object _lock = new object();
 
-        private T _data;
+        private TData _data;
 
         private DateTime _nextRefresh = DateTime.MinValue;
 
@@ -23,16 +23,17 @@ namespace Utils.Caching
             _cachePeriod = cachePeriod;
         }
 
-        public T GetValue(Func<T> refresh)
+        [CanBeNull]
+        public TData Get([NotNull] Func<TData> refresh)
         {
             var now = DateTime.UtcNow;
 
-            if (_nextRefresh <= now)
+            if (_nextRefresh > now)
                 return _data;
 
             lock (_lock)
             {
-                if (_nextRefresh <= now)
+                if (_nextRefresh > now)
                     return _data;
 
                 _data = refresh();
