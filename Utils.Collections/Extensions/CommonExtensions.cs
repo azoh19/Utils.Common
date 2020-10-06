@@ -17,12 +17,6 @@ namespace Utils.Collections.Extensions
         public static IEnumerable<T> Wrap<T>([CanBeNull] this T obj) => obj == null ? Enumerable.Empty<T>() : new[] { obj };
 
         [NotNull]
-        public static IEnumerable<T> Append<T>([NotNull] this IEnumerable<T> source, T item) => source.Concat(item.Wrap());
-
-        [NotNull]
-        public static IEnumerable<T> Prepend<T>([NotNull] this IEnumerable<T> source, T item) => item.Wrap().Concat(source);
-
-        [NotNull]
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>([NotNull] this IEnumerable<TSource>    source,
                                                                      [NotNull]      Func<TSource, TKey>     selector,
                                                                      [CanBeNull]    IEqualityComparer<TKey> comparer = null)
@@ -49,7 +43,7 @@ namespace Utils.Collections.Extensions
         public static IEnumerable<T> SkipNulls<T>([NotNull] [ItemCanBeNull] this IEnumerable<T> source) where T : class => source.Where(e => e != null);
 
         [NotNull]
-        public static IEnumerable<T> SkipNulls<T>([NotNull] this IEnumerable<T?> source) where T : struct
+        public static IEnumerable<T> SkipNulls<T>([NotNull] [ItemCanBeNull] this IEnumerable<T?> source) where T : struct
             => source.Where(item => item.HasValue).Select(item => item.Value);
     }
 }

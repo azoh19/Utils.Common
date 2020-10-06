@@ -15,7 +15,7 @@ namespace Utils.DispatchConfiguration.Infrastructure
     internal sealed class AsyncHandlerConfigurator<TInput, TOutput>
         : IAsyncHandlerConfigurator<TInput, TOutput>
     {
-        private Func<IResolver, IAsyncHandler<TInput, TOutput>> _buildHandler;
+        private readonly Func<IResolver, IAsyncHandler<TInput, TOutput>> _buildHandler;
 
         public AsyncHandlerConfigurator([NotNull] Func<IResolver, IAsyncHandler<TInput, TOutput>> resolution)
         {
