@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 #endregion
@@ -14,17 +15,11 @@ namespace Utils.Collections.ReadOnlyWrappers
     {
         private readonly IDictionary<TKey, TValue> _source;
 
-        public ReadOnlyDictionaryWrapper([NotNull] IDictionary<TKey, TValue> source)
+        public ReadOnlyDictionaryWrapper(IDictionary<TKey, TValue> source)
             : base(source)
         {
             _source = source ?? throw new ArgumentNullException(nameof(source));
         }
-
-        #region Implementation of IReadOnlyDictionary<TKey,TValue>
-
-        public bool ContainsKey(TKey key) => _source.ContainsKey(key);
-
-        public bool TryGetValue(TKey key, out TValue value) => _source.TryGetValue(key, out value);
 
         public TValue this[TKey key] => _source[key];
 
@@ -32,6 +27,10 @@ namespace Utils.Collections.ReadOnlyWrappers
 
         public IEnumerable<TValue> Values => _source.Values;
 
-        #endregion
+        public bool ContainsKey(TKey key)
+            => _source.ContainsKey(key);
+
+        public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
+            => _source.TryGetValue(key, out value);
     }
 }

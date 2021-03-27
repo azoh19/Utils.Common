@@ -10,8 +10,7 @@ namespace Utils.Handlers.Converters
     [PublicAPI]
     public interface IFullAsyncConverter<out TInput, TOutput, in TNewInput, TNewOutput>
     {
-        [NotNull]
         [ItemCanBeNull]
-        Task<TNewOutput> ConvertAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TNewInput input);
+        Task<TNewOutput> ConvertAsync(IAsyncHandler<TInput, TOutput> handler, TNewInput input);
     }
 }

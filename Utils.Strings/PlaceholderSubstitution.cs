@@ -11,10 +11,10 @@ namespace Utils.Strings
     [PublicAPI]
     public sealed class PlaceholderSubstitution
     {
-        public PlaceholderSubstitution([NotNull] Func<string, string> substitute,
-                                       [NotNull] string               prefix     = "{",
-                                       [NotNull] string               postfix    = "}",
-                                       StringComparison               comparison = StringComparison.OrdinalIgnoreCase)
+        public PlaceholderSubstitution(Func<string, string?> substitute,
+                                       string prefix = "{",
+                                       string postfix = "}",
+                                       StringComparison comparison = StringComparison.OrdinalIgnoreCase)
         {
             Substitute = substitute ?? throw new ArgumentNullException(nameof(substitute));
             Prefix     = prefix     ?? throw new ArgumentNullException(nameof(prefix));
@@ -22,18 +22,16 @@ namespace Utils.Strings
             Comparison = comparison;
         }
 
-        private Func<string, string> Substitute { get; }
-        private StringComparison     Comparison { get; }
+        private Func<string, string?> Substitute { get; }
+        private StringComparison Comparison { get; }
 
-        private string Prefix  { get; }
+        private string Prefix { get; }
         private string Postfix { get; }
 
-        private int PrefixLength  => Prefix.Length;
+        private int PrefixLength => Prefix.Length;
         private int PostfixLength => Postfix.Length;
 
-        [Pure]
-        [CanBeNull]
-        public string Process([CanBeNull] string source)
+        public string? Process(string? source)
         {
             if (source == null)
                 return null;
@@ -56,7 +54,7 @@ namespace Utils.Strings
                     return sb.Append(source, currentPosition, sourceLength - currentPosition).ToString();
 
                 var keyStart = currentTagStart + PrefixLength;
-                var key      = source.Substring(keyStart, currentTagEnd - keyStart).Trim();
+                var key      = source[keyStart..currentTagEnd].Trim();
 
                 var value = Substitute(key);
 

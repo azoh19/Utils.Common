@@ -12,9 +12,8 @@ namespace Utils.Collections.Extensions
     [PublicAPI]
     public static class BatchSplitExtension
     {
-        [NotNull]
         [ItemNotNull]
-        public static IEnumerable<IReadOnlyList<T>> BatchSplit<T>([NotNull] this IEnumerable<T> source, int batchSize)
+        public static IEnumerable<IReadOnlyList<T>> BatchSplit<T>(this IEnumerable<T> source, int batchSize)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
@@ -64,8 +63,6 @@ namespace Utils.Collections.Extensions
                 yield return new Batch<T>(enumerator, batchSize);
         }
 
-        #region Nested type: Batch
-
         private sealed class Batch<T> : IReadOnlyList<T>
         {
             private readonly T[] _data;
@@ -82,19 +79,15 @@ namespace Utils.Collections.Extensions
                     Array.Resize(ref _data, Count);
             }
 
-            #region IReadOnlyList<T> Members
-
-            public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)_data).GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => _data.GetEnumerator();
-
             public int Count { get; }
 
             public T this[int index] => _data[index];
 
-            #endregion
-        }
+            public IEnumerator<T> GetEnumerator()
+                => ((IEnumerable<T>)_data).GetEnumerator();
 
-        #endregion
+            IEnumerator IEnumerable.GetEnumerator()
+                => _data.GetEnumerator();
+        }
     }
 }

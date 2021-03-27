@@ -14,7 +14,8 @@ namespace Utils.Collections.Extensions
     {
         private static readonly Random DefaultRng = new Random((int)DateTime.Now.Ticks);
 
-        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source) => source.Shuffle(DefaultRng);
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+            => source.Shuffle(DefaultRng);
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random rng)
         {

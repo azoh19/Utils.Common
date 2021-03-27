@@ -10,16 +10,12 @@ namespace Utils.AbstractDI
     [PublicAPI]
     public interface IResolver
     {
-        [NotNull]
-        TDependency Resolve<TDependency>();
+        TDependency Resolve<TDependency>() where TDependency : class;
 
-        [NotNull]
-        object Resolve([NotNull] Type type);
+        object Resolve(Type type);
 
-        [CanBeNull]
-        TDependency TryResolve<TDependency>();
+        TDependency? TryResolve<TDependency>() where TDependency : class;
 
-        [CanBeNull]
-        object TryResolve([NotNull] Type type);
+        object? TryResolve(Type type);
     }
 }

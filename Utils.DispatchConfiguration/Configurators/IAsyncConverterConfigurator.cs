@@ -10,8 +10,7 @@ namespace Utils.DispatchConfiguration.Configurators
     [PublicAPI]
     public interface IAsyncConverterConfigurator<in TInput, TOutput, TNewInput, TNewOutput>
     {
-        [NotNull]
         IAsyncHandlerConfigurator<TNewInput, TNewOutput> By<TConverter>()
-            where TConverter : IFullAsyncConverter<TInput, TOutput, TNewInput, TNewOutput>;
+            where TConverter : class, IFullAsyncConverter<TInput, TOutput, TNewInput, TNewOutput>;
     }
 }

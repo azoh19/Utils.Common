@@ -16,19 +16,19 @@ namespace Utils.Collections.Segments
 
         private int Offset { get; }
 
-        public ListSegment([NotNull] IReadOnlyList<T> source, int offset, int count)
+        public ListSegment(IReadOnlyList<T> source, int offset, int count)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
             if (offset < 0)
-                throw new ArgumentOutOfRangeException($@"""{nameof(offset)}"" is less than zero");
+                throw new ArgumentOutOfRangeException(nameof(offset), $@"""{nameof(offset)}"" is less than zero");
 
             if (count < 0)
-                throw new ArgumentOutOfRangeException($@"""{nameof(count)}"" is less than zero");
+                throw new ArgumentOutOfRangeException(nameof(count), $@"""{nameof(count)}"" is less than zero");
 
             if (offset > source.Count)
-                throw new ArgumentException($@"""{nameof(offset)}"" is greater than collection size");
+                throw new ArgumentOutOfRangeException(nameof(offset), $@"""{nameof(offset)}"" is greater than collection size");
 
             if (offset + count > source.Count)
                 throw new ArgumentException($@"""{nameof(offset)}+{nameof(count)}"" is greater than collection size");
@@ -38,13 +38,7 @@ namespace Utils.Collections.Segments
             Count  = count;
         }
 
-        #region Implementation of IReadOnlyCollection<out T>
-
         public int Count { get; }
-
-        #endregion
-
-        #region Implementation of IReadOnlyList<out T>
 
         public T this[int index]
         {
@@ -57,18 +51,13 @@ namespace Utils.Collections.Segments
             }
         }
 
-        #endregion
-
-        #region Implementation of IEnumerable
-
         public IEnumerator<T> GetEnumerator()
         {
             for (var i = Offset; i < Offset + Count; i++)
                 yield return Source[i];
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }

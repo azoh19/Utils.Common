@@ -10,8 +10,7 @@ namespace Utils.Handlers.Converters
     [PublicAPI]
     public interface IOutputAsyncConverter<TInput, TOutput, TNewOutput>
     {
-        [NotNull]
         [ItemCanBeNull]
-        Task<TNewOutput> ConvertAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TInput output);
+        Task<TNewOutput> ConvertAsync(IAsyncHandler<TInput, TOutput> handler, TInput output);
     }
 }

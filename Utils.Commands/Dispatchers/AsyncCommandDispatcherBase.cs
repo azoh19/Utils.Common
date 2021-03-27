@@ -13,15 +13,13 @@ namespace Utils.Commands.Dispatchers
     [PublicAPI]
     public class AsyncCommandDispatcherBase : IAsyncCommandDispatcher
     {
-        [NotNull]
-        protected IResolver Resolver { get; }
-
-        protected AsyncCommandDispatcherBase([NotNull] IResolver resolver)
+        protected AsyncCommandDispatcherBase(IResolver resolver)
         {
             Resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
         }
 
-        #region Implementation of IAsyncCommandDispatcher
+
+        protected IResolver Resolver { get; }
 
         public Task<ICommandResult> DispatchAsync<TCommand>(TCommand command)
             where TCommand : ICommand
@@ -30,7 +28,5 @@ namespace Utils.Commands.Dispatchers
         public Task<ICommandResult<TResult>> DispatchAsync<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
             => Resolver.Resolve<IAsyncHandler<TCommand, ICommandResult<TResult>>>().HandleAsync(command);
-
-        #endregion
     }
 }

@@ -16,21 +16,21 @@ namespace Utils.Handlers.Common
     {
         private readonly IEnumerable<IInterceptor<TInput, TOutput>> _interceptors;
 
-        public LinkedInterceptor([NotNull] IInterceptor<TInput, TOutput> first, [NotNull] IInterceptor<TInput, TOutput> second)
+        public LinkedInterceptor(IInterceptor<TInput, TOutput> first, IInterceptor<TInput, TOutput> second)
         {
-            _interceptors = new[] { first ?? throw new ArgumentNullException(nameof(first)), second ?? throw new ArgumentNullException(nameof(second)) };
+            _interceptors = new[]
+                            {
+                                first  ?? throw new ArgumentNullException(nameof(first)),
+                                second ?? throw new ArgumentNullException(nameof(second))
+                            };
         }
 
-        public LinkedInterceptor([NotNull] [ItemNotNull] IEnumerable<IInterceptor<TInput, TOutput>> interceptors)
+        public LinkedInterceptor([ItemNotNull] IEnumerable<IInterceptor<TInput, TOutput>> interceptors)
         {
             _interceptors = interceptors ?? throw new ArgumentNullException(nameof(interceptors));
         }
 
-        #region IInterceptor<TInput,TOutput> Members
-
         public TOutput Intercept(IHandler<TInput, TOutput> handler, TInput input)
             => _interceptors.Aggregate(handler, (h, i) => h.InterceptedBy(i), h => h.Handle(input));
-
-        #endregion
     }
 }

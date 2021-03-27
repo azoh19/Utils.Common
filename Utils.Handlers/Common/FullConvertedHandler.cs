@@ -11,20 +11,17 @@ namespace Utils.Handlers.Common
     [PublicAPI]
     public sealed class FullConvertedHandler<TInput, TOutput, TNewInput, TNewOutput> : IHandler<TNewInput, TNewOutput>
     {
-        private IFullConverter<TInput, TOutput, TNewInput, TNewOutput> _innerFullConverter;
-        private IHandler<TInput, TOutput>                              _innerHandler;
+        private readonly IFullConverter<TInput, TOutput, TNewInput, TNewOutput> _innerFullConverter;
+        private readonly IHandler<TInput, TOutput> _innerHandler;
 
-        public FullConvertedHandler([NotNull] IFullConverter<TInput, TOutput, TNewInput, TNewOutput> innerFullConverter,
-                                    [NotNull] IHandler<TInput, TOutput>                              innerHandler)
+        public FullConvertedHandler(IFullConverter<TInput, TOutput, TNewInput, TNewOutput> innerFullConverter,
+                                    IHandler<TInput, TOutput> innerHandler)
         {
             _innerFullConverter = innerFullConverter ?? throw new ArgumentNullException(nameof(innerFullConverter));
             _innerHandler       = innerHandler       ?? throw new ArgumentNullException(nameof(innerHandler));
         }
 
-        #region IHandler<TNewInput,TNewOutput> Members
-
-        public TNewOutput Handle(TNewInput input) => _innerFullConverter.Convert(_innerHandler, input);
-
-        #endregion
+        public TNewOutput Handle(TNewInput input)
+            => _innerFullConverter.Convert(_innerHandler, input);
     }
 }

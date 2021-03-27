@@ -11,15 +11,12 @@ namespace Utils.Handlers.Common
     {
         private readonly TOutput _value;
 
-        public DefaultValueHandler(TOutput value = default)
+        public DefaultValueHandler(TOutput value)
         {
             _value = value;
         }
 
-        #region IHandler<TInput,TOutput> Members
-
-        public TOutput Handle(TInput input) => _value;
-
-        #endregion
+        public TOutput Handle(TInput input)
+            => _value;
     }
 }

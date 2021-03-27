@@ -11,10 +11,7 @@ namespace Utils.Handlers.Common
     public sealed class TypeCastInputConverter<TInput, TOutput, TNewInput> : IInputConverter<TInput, TOutput, TNewInput>
         where TNewInput : TInput
     {
-        #region IInputConverter<TInput,TOutput,TNewInput> Members
-
-        public TOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input) => handler.Handle(input);
-
-        #endregion
+        public TOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input)
+            => handler.Handle(input);
     }
 }

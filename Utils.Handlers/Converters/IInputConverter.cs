@@ -10,6 +10,6 @@ namespace Utils.Handlers.Converters
     public interface IInputConverter<out TInput, TOutput, in TNewInput>
     {
         [CanBeNull]
-        TOutput Convert([NotNull] IHandler<TInput, TOutput> handler, [NotNull] TNewInput input);
+        TOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input);
     }
 }

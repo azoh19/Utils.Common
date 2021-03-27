@@ -10,8 +10,7 @@ namespace Utils.Handlers.Interceptors
     [PublicAPI]
     public interface IAsyncInterceptor<TInput, TOutput>
     {
-        [NotNull]
         [ItemCanBeNull]
-        Task<TOutput> InterceptAsync([NotNull] IAsyncHandler<TInput, TOutput> handler, [NotNull] TInput input);
+        Task<TOutput> InterceptAsync(IAsyncHandler<TInput, TOutput> handler, TInput input);
     }
 }

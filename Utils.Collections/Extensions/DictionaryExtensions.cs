@@ -10,20 +10,12 @@ namespace Utils.Collections.Extensions
     [PublicAPI]
     public static class DictionaryExtensions
     {
-        [CanBeNull]
-        public static TValue GetOrDefault<TKey, TValue>([NotNull] this IDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default)
+        public static TValue? GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue? @default = default)
+            where TValue : struct
             => dictionary.TryGetValue(key, out var value) ? value : @default;
 
-        [CanBeNull]
-        public static TValue? GetOrNull<TKey, TValue>([NotNull] this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct
-            => dictionary.TryGetValue(key, out var value) ? value : (TValue?)null;
-
-        [CanBeNull]
-        public static TValue GetOrDefault<TKey, TValue>([NotNull] this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key, TValue @default = default)
+        public static TValue? GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue? @default = default)
+            where TValue : class
             => dictionary.TryGetValue(key, out var value) ? value : @default;
-
-        [CanBeNull]
-        public static TValue? GetOrNull<TKey, TValue>([NotNull] this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct
-            => dictionary.TryGetValue(key, out var value) ? value : (TValue?)null;
     }
 }

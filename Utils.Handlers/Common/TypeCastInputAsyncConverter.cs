@@ -12,10 +12,7 @@ namespace Utils.Handlers.Common
     public sealed class TypeCastInputAsyncConverter<TInput, TOutput, TNewInput> : IInputAsyncConverter<TInput, TOutput, TNewInput>
         where TNewInput : TInput
     {
-        #region IInputAsyncConverter<TInput,TOutput,TNewInput> Members
-
-        public Task<TOutput> ConvertAsync(IAsyncHandler<TInput, TOutput> handler, TNewInput input) => handler.HandleAsync(input);
-
-        #endregion
+        public Task<TOutput> ConvertAsync(IAsyncHandler<TInput, TOutput> handler, TNewInput input)
+            => handler.HandleAsync(input);
     }
 }

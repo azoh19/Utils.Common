@@ -14,27 +14,17 @@ namespace Utils.Collections.ReadOnlyWrappers
     {
         private readonly ICollection<T> _source;
 
-        public ReadOnlyCollectionWrapper([NotNull] ICollection<T> source)
+        public ReadOnlyCollectionWrapper(ICollection<T> source)
         {
             _source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
-        #region IReadOnlyCollection<T> Members
-
-        #region Implementation of IReadOnlyCollection<out T>
-
         public int Count => _source.Count;
 
-        #endregion
+        public IEnumerator<T> GetEnumerator()
+            => _source.GetEnumerator();
 
-        #endregion
-
-        #region Implementation of IEnumerable
-
-        public IEnumerator<T> GetEnumerator() => _source.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }

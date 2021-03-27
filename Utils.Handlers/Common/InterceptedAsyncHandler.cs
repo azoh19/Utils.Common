@@ -11,20 +11,17 @@ namespace Utils.Handlers.Common
     [PublicAPI]
     public sealed class InterceptedAsyncHandler<TInput, TOutput> : IAsyncHandler<TInput, TOutput>
     {
-        private readonly IAsyncHandler<TInput, TOutput>     _innerHandler;
+        private readonly IAsyncHandler<TInput, TOutput> _innerHandler;
         private readonly IAsyncInterceptor<TInput, TOutput> _innerInterceptor;
 
-        public InterceptedAsyncHandler([NotNull] IAsyncInterceptor<TInput, TOutput> innerInterceptor,
-                                       [NotNull] IAsyncHandler<TInput, TOutput>     innerHandler)
+        public InterceptedAsyncHandler(IAsyncInterceptor<TInput, TOutput> innerInterceptor,
+                                       IAsyncHandler<TInput, TOutput> innerHandler)
         {
             _innerInterceptor = innerInterceptor;
             _innerHandler     = innerHandler;
         }
 
-        #region IAsyncHandler<TInput,TOutput> Members
-
-        public Task<TOutput> HandleAsync(TInput input) => _innerInterceptor.InterceptAsync(_innerHandler, input);
-
-        #endregion
+        public Task<TOutput> HandleAsync(TInput input)
+            => _innerInterceptor.InterceptAsync(_innerHandler, input);
     }
 }

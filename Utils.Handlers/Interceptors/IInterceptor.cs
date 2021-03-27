@@ -10,6 +10,6 @@ namespace Utils.Handlers.Interceptors
     public interface IInterceptor<TInput, TOutput>
     {
         [CanBeNull]
-        TOutput Intercept([NotNull] IHandler<TInput, TOutput> handler, [NotNull] TInput input);
+        TOutput Intercept(IHandler<TInput, TOutput> handler, TInput input);
     }
 }

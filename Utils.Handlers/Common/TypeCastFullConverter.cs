@@ -12,10 +12,7 @@ namespace Utils.Handlers.Common
         where TNewInput : TInput
         where TOutput : TNewOutput
     {
-        #region IConverter<TInput,TOutput,TNewInput,TNewOutput> Members
-
-        public TNewOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input) => handler.Handle(input);
-
-        #endregion
+        public TNewOutput Convert(IHandler<TInput, TOutput> handler, TNewInput input)
+            => handler.Handle(input);
     }
 }

@@ -10,23 +10,23 @@ namespace Utils.Strings
     [PublicAPI]
     public static class StringExtensions
     {
-        public static string RemoveStart([NotNull] this string str, [NotNull] string startSubstring)
+        public static string RemoveStart(this string? str, string? startSubstring, StringComparison comparison = StringComparison.Ordinal)
         {
-            if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(startSubstring) || !str.StartsWith(startSubstring, StringComparison.Ordinal))
-                return str;
+            if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(startSubstring) || !str.StartsWith(startSubstring, comparison))
+                return str ?? "";
 
             return str.Substring(startSubstring.Length);
         }
 
-        public static string RemoveEnd([NotNull] this string str, [NotNull] string endSubstring)
+        public static string RemoveEnd(this string? str, string? endSubstring, StringComparison comparison = StringComparison.Ordinal)
         {
-            if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(endSubstring) || !str.EndsWith(endSubstring, StringComparison.Ordinal))
-                return str;
+            if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(endSubstring) || !str.EndsWith(endSubstring, comparison))
+                return str ?? "";
 
             return str.Substring(0, str.Length - endSubstring.Length);
         }
 
-        public static string CutToLength([NotNull] this string str, int length)
+        public static string CutToLength(this string? str, int length)
         {
             if ((length <= 0) || string.IsNullOrEmpty(str))
                 return "";

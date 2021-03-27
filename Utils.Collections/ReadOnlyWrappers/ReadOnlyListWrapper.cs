@@ -12,20 +12,12 @@ namespace Utils.Collections.ReadOnlyWrappers
     {
         private readonly IList<T> _source;
 
-        public ReadOnlyListWrapper([NotNull] IList<T> source)
+        public ReadOnlyListWrapper(IList<T> source)
             : base(source)
         {
             _source = source;
         }
 
-        #region IReadOnlyList<T> Members
-
-        #region Implementation of IReadOnlyList<out T>
-
         public T this[int index] => _source[index];
-
-        #endregion
-
-        #endregion
     }
 }

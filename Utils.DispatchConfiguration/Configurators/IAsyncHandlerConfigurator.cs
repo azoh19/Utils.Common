@@ -4,7 +4,6 @@ using System;
 using JetBrains.Annotations;
 using Utils.AbstractDI;
 using Utils.Handlers;
-using Utils.Handlers.Converters;
 using Utils.Handlers.Interceptors;
 
 #endregion
@@ -14,32 +13,18 @@ namespace Utils.DispatchConfiguration.Configurators
     [PublicAPI]
     public interface IAsyncHandlerConfigurator<TInput, TOutput>
     {
-        [NotNull]
-        IAsyncHandlerConfigurator<TInput, TOutput> InterceptBy<TInterceptor>()
-            where TInterceptor : IAsyncInterceptor<TInput, TOutput>;
+        Func<IResolver, IAsyncHandler<TInput, TOutput>> Build { get; }
 
-        [NotNull]
-        IAsyncHandlerConfigurator<TNewInput, TNewOutput> ConvertBy<TConverter, TNewInput, TNewOutput>()
-            where TConverter : IFullAsyncConverter<TInput, TOutput, TNewInput, TNewOutput>;
 
-        [NotNull]
-        IAsyncHandlerConfigurator<TNewInput, TOutput> ConvertInputBy<TConverter, TNewInput>()
-            where TConverter : IInputAsyncConverter<TInput, TOutput, TNewInput>;
+        IAsyncHandlerConfigurator<TInput, TOutput> With<TInterceptor>() where TInterceptor : class, IAsyncInterceptor<TInput, TOutput>;
 
-        [NotNull]
-        IAsyncHandlerConfigurator<TInput, TNewOutput> ConvertOutputBy<TConverter, TNewOutput>()
-            where TConverter : IOutputAsyncConverter<TInput, TOutput, TNewOutput>;
 
-        [NotNull]
         IAsyncConverterConfigurator<TInput, TOutput, TNewInput, TNewOutput> ConvertTo<TNewInput, TNewOutput>();
 
-        [NotNull]
-        IInputAsyncConverterConfigurator<TInput, TOutput, TNewInput> ConvertInputTo<TNewInput>();
 
-        [NotNull]
-        IOutputAsyncConverterConfigurator<TInput, TOutput, TNewOutput> ConvertOutputTo<TNewOutput>();
+        IInputAsyncConverterConfigurator<TInput, TOutput, TNewInput> InputTo<TNewInput>();
 
-        [NotNull]
-        Func<IResolver, IAsyncHandler<TInput, TOutput>> BuildHandler { get; }
+
+        IOutputAsyncConverterConfigurator<TInput, TOutput, TNewOutput> OutputTo<TNewOutput>();
     }
 }

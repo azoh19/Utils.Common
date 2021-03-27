@@ -12,8 +12,7 @@ namespace Utils.Collections.Extensions
     [PublicAPI]
     public static class TakeSegmentExtensions
     {
-        [NotNull]
-        public static IReadOnlyList<T> TakeSegment<T>([NotNull] this T[] source, int offset, int count)
+        public static IReadOnlyList<T> TakeSegment<T>(this T[] source, int offset, int count)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
@@ -21,8 +20,7 @@ namespace Utils.Collections.Extensions
             return new ArraySegment<T>(source, offset, count);
         }
 
-        [NotNull]
-        public static IReadOnlyList<T> TakeSegment<T>([NotNull] this IReadOnlyList<T> source, int offset, int count)
+        public static IReadOnlyList<T> TakeSegment<T>(this IReadOnlyList<T> source, int offset, int count)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));

@@ -12,15 +12,13 @@ namespace Utils.Commands.Dispatchers
     [PublicAPI]
     public class CommandDispatcherBase : ICommandDispatcher
     {
-        [NotNull]
-        protected IResolver Resolver { get; }
-
-        protected CommandDispatcherBase([NotNull] IResolver resolver)
+        protected CommandDispatcherBase(IResolver resolver)
         {
             Resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
         }
 
-        #region Implementation of ICommandDispatcher
+
+        protected IResolver Resolver { get; }
 
         public ICommandResult Dispatch<TCommand>(TCommand command)
             where TCommand : ICommand
@@ -29,7 +27,5 @@ namespace Utils.Commands.Dispatchers
         public ICommandResult<TResult> Dispatch<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
             => Resolver.Resolve<IHandler<TCommand, ICommandResult<TResult>>>().Handle(command);
-
-        #endregion
     }
 }
